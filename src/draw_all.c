@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:17:10 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/28 16:14:44 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/28 21:41:47 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ void	draw_map(t_data *mlx, char **map)
 	}
 }
 
+
 void draw_all(t_data *mlx)
 {
 	draw_background(mlx);
 	draw_wall(mlx);
 	draw_map(mlx, mlx->map->map_grid);
-	// draw_obstacle(mlx, 900, 300);
 	draw_player(mlx);
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->buffer_img->img_ptr, 0, 0);
 }

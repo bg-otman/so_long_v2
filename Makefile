@@ -2,6 +2,7 @@ SRCS =  src/main.c src/move_player.c src/draw_background.c src/draw_wall.c src/d
 		src/valid_key.c src/draw_obstacle.c src/process_map.c src/parse_map.c src/free_static.c \
 		src/put_error.c src/check_valid_path.c src/clean_and_exit.c src/ft_free.c \
 		src/init_texture.c src/draw_collectable.c src/draw_door.c src/draw_img.c \
+		src/put_img_to_buffer.c \
 		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 LIBFT = libft.a

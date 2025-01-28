@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:08:21 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/27 15:33:40 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/28 21:35:52 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void draw_background(t_data *mlx)
 {
-    int x;
-    int y;
-
+    int (x), (y);
     if (!mlx->img_bg || !mlx->img_bg->img_ptr)
     {
         printf("Background texture not loaded!\n");
@@ -28,7 +26,7 @@ void draw_background(t_data *mlx)
         x = 0;
         while (x < mlx->WINDOW_WIDTH)
         {
-            mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img_bg->img_ptr, x, y);
+            put_img_to_buffer(mlx->buffer_img, mlx->img_bg, x, y);
             x += mlx->img_bg->width;
         }
         y += mlx->img_bg->height;

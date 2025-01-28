@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:26:59 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/28 17:51:22 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/28 21:35:19 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_data
     t_image     *door;
     t_image     *img_wall;
     t_image     *img_bg;
+    t_image     *buffer_img;
     t_player    *player;
     t_map       *map;
 }			t_data;
@@ -84,10 +85,12 @@ void    draw_all(t_data *mlx);
 void    draw_obstacle(t_data *mlx, int posX, int posY);
 void    draw_collectable(t_data *mlx, int posX, int posY);
 void    draw_door(t_data *mlx, int posX, int posY);
-void	draw_img(t_data *mlx, t_image **img, int posX, int posY);
+void	draw_img(t_data *mlx, t_image *img, int posX, int posY);
 void    move_player(int key, t_data *mlx);
 void    free_static(int fd);
 void    put_error(char *error_msg, t_data *mlx);
+void    put_img_to_buffer(t_image *dst, t_image *src, int x, int y);
+void	put_pixel_to_buffer(t_image *img, int x, int y, int color);
 void    check_valid_path(t_data *mlx);
 void    clean_and_exit(t_data *mlx);
 int     close_window(t_data *mlx);

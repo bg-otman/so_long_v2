@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:55:57 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/27 15:38:44 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/28 21:36:26 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ void draw_obstacle(t_data *mlx, int posX, int posY)
         printf("Background texture not loaded!\n");
         return ;
     }
-    mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->obstacle->img_ptr, posX, posY);
+    put_img_to_buffer(mlx->buffer_img, mlx->obstacle, posX, posY);
 }

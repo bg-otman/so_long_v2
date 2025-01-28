@@ -6,13 +6,13 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:42:59 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/28 17:53:14 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/28 21:41:27 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-///  
+/// 
 void draw_rectangle_around_player(t_data *mlx)
 {
     int pxl_x;
@@ -28,7 +28,7 @@ void draw_rectangle_around_player(t_data *mlx)
                 pxl_y == mlx->player->height || 
                 pxl_x == mlx->player->width)
             {
-                mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, 
+                put_pixel_to_buffer(mlx->buffer_img, 
                     mlx->player->x + pxl_x, mlx->player->y + pxl_y, 0x00FF00);
             }
             pxl_x++;
@@ -40,7 +40,7 @@ void draw_rectangle_around_player(t_data *mlx)
 
 void draw_player(t_data *mlx)
 {
-    draw_img(mlx, &mlx->player->img, mlx->player->x, mlx->player->y);
+    draw_img(mlx, mlx->player->img, mlx->player->x, mlx->player->y);
     draw_rectangle_around_player(mlx);
 }
 
@@ -97,14 +97,3 @@ void move_player(int key, t_data *mlx)
     }
     draw_all(mlx);
 }
-
-// void    move_player(int key, t_data *mlx)
-// {
-//     t_player *player;
-
-//     player = mlx->player;
-//     if (key == 65363)
-//         player->y += 10;
-//     draw_all(mlx);
-// }
-

@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:28:03 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/28 16:29:15 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/28 19:06:41 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ int close_window(t_data *mlx)
 	}
 	if (mlx->map)
 		free(mlx->map);
+	
+	if (mlx->buffer_img && mlx->buffer_img->img_ptr)
+		mlx_destroy_image(mlx->mlx_ptr, mlx->buffer_img->img_ptr);
+	if (mlx->buffer_img)
+		free(mlx->buffer_img);
 
 	if (mlx->mlx_ptr)
 	{
@@ -98,6 +103,15 @@ void	init_data(t_data *mlx)
 	mlx->collect = NULL;
 	mlx->door = NULL;
 	mlx->img_wall = NULL;
+	mlx->buffer_img = malloc(sizeof(t_image));
+	if (!mlx->buffer_img)
+	{
+		free(mlx->player);
+		free(mlx);
+		perror("Allocation failed for buffer_img structure! :");	
+		close_window(mlx);
+	}
+	mlx->buffer_img->img_ptr = NULL;
 	mlx->exit_status = EXIT_SUCCESS;
 }
 
@@ -154,6 +168,25 @@ int	main(int ac, char *av[])
 	
 	mlx->WINDOW_WIDTH = mlx->map->map_width * mlx->img_wall->width;
 	mlx->WINDOW_HEIGHT = mlx->map->map_height * mlx->img_wall->height;
+	
+	
+	mlx->buffer_img->img_ptr = mlx_new_image(mlx->mlx_ptr, mlx->WINDOW_WIDTH, mlx->WINDOW_HEIGHT);
+	if (!mlx->buffer_img->img_ptr)
+	{
+		perror("Failed to create buffer image!");
+		mlx->exit_status = EXIT_FAILURE;
+		close_window(mlx);
+	}
+	mlx->buffer_img->pixel_data = mlx_get_data_addr(
+    mlx->buffer_img->img_ptr,
+    &mlx->buffer_img->bpp,
+    &mlx->buffer_img->line_size,
+    &mlx->buffer_img->endian
+	);
+
+	mlx->buffer_img->width = mlx->WINDOW_WIDTH;
+	mlx->buffer_img->height = mlx->WINDOW_HEIGHT;
+	
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, mlx->WINDOW_WIDTH, mlx->WINDOW_HEIGHT, "Hello world!");
 	draw_all(mlx);
 	// mlx_hook(mlx->win_ptr, 2, 1L << 0, key_press, (t_data *) mlx);
