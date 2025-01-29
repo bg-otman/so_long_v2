@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:28:03 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/29 13:07:32 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/29 21:28:16 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,15 @@ int close_window(t_data *mlx)
 	if (mlx->collect)
 		free(mlx->collect);
 
-	if (mlx->door && mlx->door->img_ptr)
-    	mlx_destroy_image(mlx->mlx_ptr, mlx->door->img_ptr);
-	if (mlx->door)
-		free(mlx->door);
+	if (mlx->door_close && mlx->door_close->img_ptr)
+    	mlx_destroy_image(mlx->mlx_ptr, mlx->door_close->img_ptr);
+	if (mlx->door_close)
+		free(mlx->door_close);
+
+	if (mlx->door_open && mlx->door_open->img_ptr)
+    	mlx_destroy_image(mlx->mlx_ptr, mlx->door_open->img_ptr);
+	if (mlx->door_open)
+		free(mlx->door_open);
 
 	if (mlx->player && mlx->player->img)
 	{
@@ -101,8 +106,10 @@ void	init_data(t_data *mlx)
 	mlx->img_bg = NULL;
 	mlx->obstacle = NULL;
 	mlx->collect = NULL;
-	mlx->door = NULL;
+	mlx->door_close = NULL;
+	mlx->door_open = NULL;
 	mlx->img_wall = NULL;
+	mlx->collect_all = 0;
 	mlx->buffer_img = malloc(sizeof(t_image));
 	if (!mlx->buffer_img)
 	{
@@ -158,7 +165,8 @@ int	main(int ac, char *av[])
 		|| !init_texture(mlx, &(mlx->player->img), "assets/warrior.xpm")
 		|| !init_texture(mlx, &(mlx->obstacle), "assets/box_grey.xpm")
 		|| !init_texture(mlx, &(mlx->collect), "assets/coin_skull.xpm")
-		|| !init_texture(mlx, &(mlx->door), "assets/gate_closed.xpm"))
+		|| !init_texture(mlx, &(mlx->door_close), "assets/gate_closed.xpm")
+		|| !init_texture(mlx, &(mlx->door_open), "assets/gate_open.xpm"))
 	{
 		mlx->exit_status = EXIT_FAILURE;
 		close_window(mlx);
@@ -189,7 +197,6 @@ int	main(int ac, char *av[])
 	
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, mlx->WINDOW_WIDTH, mlx->WINDOW_HEIGHT, "Hello world!");
 	draw_all(mlx);
-	// mlx_hook(mlx->win_ptr, 2, 1L << 0, key_press, (t_data *) mlx);
 	mlx_key_hook(mlx->win_ptr, key_press, (t_data *) mlx);
 	mlx_hook(mlx->win_ptr, 17, 0, close_window, (t_data *) mlx);
 	mlx_loop(mlx->mlx_ptr);

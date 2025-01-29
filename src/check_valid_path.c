@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:48:43 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/29 10:45:04 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/29 20:57:48 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,28 @@ void get_player_position(char **map, int *playerX, int *playerY)
     }
 }
 
-int is_allowed_move(char **map, int x, int y)
+int allowed_move(char **map, int x, int y, int allow_exit)
 {
-    if (map[y][x] == '0' || map[y][x] == 'C' || map[y][x] == 'E')
+    if (map[y][x] == '0' || map[y][x] == 'C'
+        || (allow_exit && map[y][x] == 'E'))
         return (1);
     return (0);
 }
 
-void    floodfill(char **map_copy, int x, int y, t_map *map)
+void floodfill(char **map_copy, int x, int y, t_map *map, int allow_exit)
 {
     char visited;
-
+    
     visited = 'X';
     map_copy[y][x] = visited;
-    if (x - 1 >= 0 && is_allowed_move(map_copy, x - 1, y))
-        floodfill(map_copy, x - 1, y, map);
-    if (x + 1 < map->map_width && is_allowed_move(map_copy, x + 1, y))
-        floodfill(map_copy, x + 1, y, map);
-    if (y + 1 < map->map_height && is_allowed_move(map_copy, x, y + 1))
-        floodfill(map_copy, x, y + 1, map);
-    if (y - 1 >= 0 && is_allowed_move(map_copy, x, y - 1))
-        floodfill(map_copy, x, y - 1, map);
+    if (x - 1 >= 0 && allowed_move(map_copy, x - 1, y, allow_exit))
+        floodfill(map_copy, x - 1, y, map, allow_exit);
+    if (x + 1 < map->map_width && allowed_move(map_copy, x + 1, y, allow_exit))
+        floodfill(map_copy, x + 1, y, map, allow_exit);
+    if (y + 1 < map->map_height && allowed_move(map_copy, x, y + 1, allow_exit))
+        floodfill(map_copy, x, y + 1, map, allow_exit);
+    if (y - 1 >= 0 && allowed_move(map_copy, x, y - 1, allow_exit))
+        floodfill(map_copy, x, y - 1, map, allow_exit);
 }
 
 char **copy_map(char **map, int map_size, t_data *mlx)
@@ -82,22 +83,6 @@ char **copy_map(char **map, int map_size, t_data *mlx)
     map_copy[i] = NULL;
     return map_copy;
 }
-
-// void print_map(char **map)
-// {
-// 	int i = 0, j;
-// 	while(map[i])
-// 	{
-// 		j = 0;
-// 		while (map[i][j])
-// 		{
-// 			printf("%c", map[i][j]);
-// 			j++;
-// 		}
-//         printf("\n");
-// 		i++;
-// 	}
-// }
 
 void    is_reached_all_element(char **map_copy, char element, t_data *mlx)
 {
@@ -128,14 +113,17 @@ void    is_reached_all_element(char **map_copy, char element, t_data *mlx)
     }
 }
 
-void    check_valid_path(t_data *mlx)
+void check_valid_path(t_data *mlx)
 {
     char **map_copy;
-    
+
     get_player_position(mlx->map->map_grid, &mlx->player->x, &mlx->player->y);
     map_copy = copy_map(mlx->map->map_grid, mlx->map->map_height, mlx);
-    floodfill(map_copy, mlx->player->x, mlx->player->y, mlx->map);
+    floodfill(map_copy, mlx->player->x, mlx->player->y, mlx->map, 0);
     is_reached_all_element(map_copy, 'C', mlx);
+    ft_free(map_copy);
+    map_copy = copy_map(mlx->map->map_grid, mlx->map->map_height, mlx);
+    floodfill(map_copy, mlx->player->x, mlx->player->y, mlx->map, 1);
     is_reached_all_element(map_copy, 'E', mlx);
     ft_free(map_copy);
 }

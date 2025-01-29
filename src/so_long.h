@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:26:59 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/29 10:29:47 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/29 21:02:29 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,13 @@ typedef struct s_data
 	void	    *win_ptr;
     int         WINDOW_WIDTH;
     int         WINDOW_HEIGHT;
+    int         collectable_count;
+    int         collect_all;
     int         exit_status;
     t_image     *obstacle;
     t_image     *collect;
-    t_image     *door;
+    t_image     *door_close;
+    t_image     *door_open;
     t_image     *img_wall;
     t_image     *img_bg;
     t_image     *buffer_img;
@@ -80,11 +83,8 @@ typedef struct s_data
 
 void    draw_background(t_data *mlx);
 void    draw_wall(t_data *mlx);
-void    draw_player(t_data *mlx);
 void    draw_all(t_data *mlx);
 void    draw_obstacle(t_data *mlx, int posX, int posY);
-void    draw_collectable(t_data *mlx, int posX, int posY);
-void    draw_door(t_data *mlx, int posX, int posY);
 void	draw_img(t_data *mlx, t_image *img, int posX, int posY);
 void    move_player(int key, t_data *mlx);
 void    get_player_position(char **map, int *playerX, int *playerY);

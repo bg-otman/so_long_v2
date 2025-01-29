@@ -5,8 +5,8 @@ SRCS =  src/main.c src/move_player.c src/draw_background.c src/draw_wall.c src/d
 		src/put_img_to_buffer.c \
 		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
-LIBFT = libft.a
-CC = cc
+LIBFT = libft/libft.a
+CC = cc #-fsanitize=address -g
 CFLAGS = -Wall -Wextra -Werror
 # MLX_LIB = -lmlx -lX11 -lXext -lm
 MLX_LIB = minilibx/libmlx.a -lX11 -lXext -lm
@@ -16,7 +16,7 @@ NAME = so_long
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(MLX_LIB) libft/$(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(MLX_LIB) $(LIBFT) -o $(NAME)
 
 $(LIBFT) :
 	@$(MAKE) -C libft
@@ -28,6 +28,6 @@ clean:
 	@rm -f src/*.o libft/*.o get_next_line/*.o
 
 fclean: clean
-	@rm -f $(NAME) libft/$(LIBFT)
+	@rm -f $(NAME)
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 09:32:56 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/27 09:34:57 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/29 15:43:21 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,11 @@ void    process_map(const char *map_path, t_data *mlx)
 {
     int fd;
     t_map *map;
-
+    
+    if (ft_strncmp(&map_path[ft_strlen(map_path) - 4], ".ber", 4))
+    {
+        put_error("Only files with \".ber\" extention allowed!\n", mlx);
+    }
     fd = open(map_path, O_RDONLY);
     if (fd == -1)
         system_error("Error opening map file : ", mlx, fd);
