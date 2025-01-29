@@ -6,94 +6,60 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:42:59 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/28 21:41:27 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/29 13:09:06 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/// 
-void draw_rectangle_around_player(t_data *mlx)
+void    is_valid_move(int key, t_player *player, char **map)
 {
-    int pxl_x;
-    int pxl_y;
+    int playerX;
+    int playerY;
 
-    pxl_y = 0;
-    while (pxl_y <= mlx->player->height)
+    get_player_position(map, &playerX, &playerY);
+    if (key == XK_Right)
     {
-        pxl_x = 0;
-        while (pxl_x <= mlx->player->width)
+        if (map[playerY] && map[playerY][playerX + 1] != '1')
         {
-            if (pxl_x == 0 || pxl_y == 0 || 
-                pxl_y == mlx->player->height || 
-                pxl_x == mlx->player->width)
-            {
-                put_pixel_to_buffer(mlx->buffer_img, 
-                    mlx->player->x + pxl_x, mlx->player->y + pxl_y, 0x00FF00);
-            }
-            pxl_x++;
+            player->x += player->speed;
+            map[playerY][playerX] = '0';
+            map[playerY][playerX + 1] = 'P';
         }
-        pxl_y++;
     }
-}
-///
-
-void draw_player(t_data *mlx)
-{
-    draw_img(mlx, mlx->player->img, mlx->player->x, mlx->player->y);
-    draw_rectangle_around_player(mlx);
+    if (key == XK_Left)
+    {
+        if (map[playerY] && map[playerY][playerX - 1] != '1')
+        {
+            player->x -= player->speed;
+            map[playerY][playerX] = '0';
+            map[playerY][playerX - 1] = 'P';
+        }
+    }
+    if (key == XK_Up)
+    {
+        if (map[playerY - 1] && map[playerY - 1][playerX] != '1')
+        {
+            player->y -= player->speed;
+            map[playerY][playerX] = '0';
+            map[playerY - 1][playerX] = 'P';
+        }
+    }
+    if (key == XK_Down)
+    {
+        if (map[playerY + 1] && map[playerY + 1][playerX] != '1')
+        {
+            player->y += player->speed;
+            map[playerY][playerX] = '0';
+            map[playerY + 1][playerX] = 'P';
+        }
+    }
 }
 
 void move_player(int key, t_data *mlx)
 {
     t_player *player;
-    int max_move;
-    int wall_width;
-
     player = mlx->player;
-    wall_width = mlx->img_wall->width;
-    mlx_clear_window(mlx->mlx_ptr, mlx->win_ptr);
-    if (key == XK_Left)
-    {
-        if (player->x > wall_width)
-        {
-            if (player->x - player->speed < wall_width)
-                player->x = wall_width;
-            else
-                player->x -= player->speed;
-        }
-    }
-    if (key == XK_Right)
-    {
-        if (player->x + player->width < mlx->WINDOW_WIDTH - wall_width)
-        {
-            max_move = mlx->WINDOW_WIDTH - wall_width - (player->x + player->width);
-            if (player->speed > max_move)
-                player->x += max_move;
-            else
-                player->x += player->speed;
-        }
-    }
-    if (key == XK_Up)
-    {
-        if (player->y > wall_width)
-        {
-            if (player->y - player->speed < wall_width)
-                player->y = wall_width;
-            else
-                player->y -= player->speed;
-        }
-    }
-    if (key == XK_Down)
-    {
-        if (player->y + player->height < mlx->WINDOW_HEIGHT - wall_width)
-        {
-            max_move = mlx->WINDOW_HEIGHT - wall_width - (player->y + player->height);
-            if (player->speed > max_move)
-                player->y += max_move;
-            else
-                player->y += player->speed;
-        }
-    }
+    is_valid_move(key, player, mlx->map->map_grid);
     draw_all(mlx);
 }

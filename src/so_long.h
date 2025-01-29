@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:26:59 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/28 21:35:19 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/29 10:29:47 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void    draw_collectable(t_data *mlx, int posX, int posY);
 void    draw_door(t_data *mlx, int posX, int posY);
 void	draw_img(t_data *mlx, t_image *img, int posX, int posY);
 void    move_player(int key, t_data *mlx);
+void    get_player_position(char **map, int *playerX, int *playerY);
 void    free_static(int fd);
 void    put_error(char *error_msg, t_data *mlx);
 void    put_img_to_buffer(t_image *dst, t_image *src, int x, int y);

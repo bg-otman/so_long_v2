@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:28:03 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/28 19:06:41 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/29 13:07:32 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int	main(int ac, char *av[])
 		|| !init_texture(mlx, &(mlx->player->img), "assets/warrior.xpm")
 		|| !init_texture(mlx, &(mlx->obstacle), "assets/box_grey.xpm")
 		|| !init_texture(mlx, &(mlx->collect), "assets/coin_skull.xpm")
-		|| !init_texture(mlx, &(mlx->door), "assets/close_door.xpm"))
+		|| !init_texture(mlx, &(mlx->door), "assets/gate_closed.xpm"))
 	{
 		mlx->exit_status = EXIT_FAILURE;
 		close_window(mlx);

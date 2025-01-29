@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:17:10 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/28 21:41:47 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/29 13:18:06 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ void	draw_map(t_data *mlx, char **map)
 		while (x < mlx->WINDOW_WIDTH - mlx->img_wall->width)
 		{
 			if (map[i][j] == '1')
-				draw_obstacle(mlx, x, y);
+				put_img_to_buffer(mlx->buffer_img, mlx->obstacle, x, y);
 			else if (map[i][j] == 'C')
-				draw_collectable(mlx, x, y);
+				put_img_to_buffer(mlx->buffer_img, mlx->collect, x, y);
 			else if (map[i][j] == 'E')
-				draw_door(mlx, x, y);
+				put_img_to_buffer(mlx->buffer_img, mlx->door, x, y);
+			else if (map[i][j] == 'P')
+				put_img_to_buffer(mlx->buffer_img, mlx->player->img, x, y);
 			x += mlx->img_wall->width;
 			j++;
 		}
@@ -37,13 +39,23 @@ void	draw_map(t_data *mlx, char **map)
 		y += mlx->img_wall->height;
 	}
 }
+void clear_buffer(t_image *buffer, int color)
+{
+    for (int y = 0; y < buffer->height; y++)
+    {
+        for (int x = 0; x < buffer->width; x++)
+        {
+            put_pixel_to_buffer(buffer, x, y, color);
+        }
+    }
+}
 
 
 void draw_all(t_data *mlx)
 {
+	clear_buffer(mlx->buffer_img, 0x000000);
 	draw_background(mlx);
 	draw_wall(mlx);
 	draw_map(mlx, mlx->map->map_grid);
-	draw_player(mlx);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->buffer_img->img_ptr, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:12:30 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/28 22:32:14 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/29 13:05:28 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void put_img_to_buffer(t_image *buffer_img, t_image *img, int x, int y)
     int i;
     int j;
 
+    if (!img || !buffer_img)
+        return ;
     j = 0;
     while (j < img->height)
     {
@@ -45,5 +47,4 @@ void put_img_to_buffer(t_image *buffer_img, t_image *img, int x, int y)
         }
         j++;
     }
-
 }

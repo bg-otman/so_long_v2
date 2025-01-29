@@ -6,13 +6,13 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:48:43 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/28 12:55:46 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/29 10:45:04 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void get_player_position(char **map, t_player *player)
+void get_player_position(char **map, int *playerX, int *playerY)
 {
     int (y), (x);
     y = 1;
@@ -23,8 +23,8 @@ void get_player_position(char **map, t_player *player)
         {
             if (map[y][x] == 'P')
             {
-                player->x = x;
-                player->y = y;
+                *playerX = x;
+                *playerY = y;
                 return ;
             }
             x++;
@@ -132,7 +132,7 @@ void    check_valid_path(t_data *mlx)
 {
     char **map_copy;
     
-    get_player_position(mlx->map->map_grid, mlx->player);
+    get_player_position(mlx->map->map_grid, &mlx->player->x, &mlx->player->y);
     map_copy = copy_map(mlx->map->map_grid, mlx->map->map_height, mlx);
     floodfill(map_copy, mlx->player->x, mlx->player->y, mlx->map);
     is_reached_all_element(map_copy, 'C', mlx);
