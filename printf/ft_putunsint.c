@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_static.c                                      :+:      :+:    :+:   */
+/*   ft_putunsint.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 10:57:48 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/26 10:59:01 by obouizi          ###   ########.fr       */
+/*   Created: 2024/11/26 09:10:52 by obouizi           #+#    #+#             */
+/*   Updated: 2025/01/30 15:10:18 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "ft_printf.h"
 
-/*All this function doing is just freeing 
-the remaining data in the static variable*/
-void	free_static(int fd)
+int	ft_putunsint(unsigned int nb)
 {
-	char	*buffer;
+	int	count;
 
-	buffer = get_next_line(fd);
-	while (buffer)
-	{
-		free(buffer);
-		buffer = get_next_line(fd);
-	}
+	count = 0;
+	if (nb >= 10)
+		count += ft_putunsint(nb / 10);
+	count += ft_putchar((nb % 10) + '0');
+	return (count);
 }

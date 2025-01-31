@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_static.c                                      :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 10:57:48 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/26 10:59:01 by obouizi          ###   ########.fr       */
+/*   Created: 2024/10/29 10:32:19 by obouizi           #+#    #+#             */
+/*   Updated: 2025/01/30 15:10:18 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "ft_printf.h"
 
-/*All this function doing is just freeing 
-the remaining data in the static variable*/
-void	free_static(int fd)
+int	ft_putchar(char c)
 {
-	char	*buffer;
-
-	buffer = get_next_line(fd);
-	while (buffer)
-	{
-		free(buffer);
-		buffer = get_next_line(fd);
-	}
+	return (write(1, &c, 1));
 }

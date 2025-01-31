@@ -6,13 +6,13 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:53:37 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/29 15:47:12 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/30 16:11:26 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void    clean_and_exit(t_data *mlx)
+void	clean_and_exit(t_data *mlx)
 {
 	if (mlx->player)
 		free(mlx->player);

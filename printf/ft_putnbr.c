@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_static.c                                      :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 10:57:48 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/26 10:59:01 by obouizi          ###   ########.fr       */
+/*   Created: 2024/10/29 18:03:26 by obouizi           #+#    #+#             */
+/*   Updated: 2025/01/30 15:10:18 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "ft_printf.h"
 
-/*All this function doing is just freeing 
-the remaining data in the static variable*/
-void	free_static(int fd)
+int	ft_putnbr(int n)
 {
-	char	*buffer;
+	int	count;
 
-	buffer = get_next_line(fd);
-	while (buffer)
+	count = 0;
+	if (n == -2147483648)
+		return (write(1, "-2147483648", 11));
+	if (n < 0)
 	{
-		free(buffer);
-		buffer = get_next_line(fd);
+		count += ft_putchar('-');
+		n = -n;
 	}
+	if (n >= 10)
+	{
+		count += ft_putnbr(n / 10);
+	}
+	count += ft_putchar((n % 10) + '0');
+	return (count);
 }

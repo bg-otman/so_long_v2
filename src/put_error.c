@@ -12,8 +12,8 @@
 
 #include "so_long.h"
 
-void    put_error(char *error_msg, t_data *mlx)
+void	put_error(char *error_msg, t_data *mlx)
 {
-    ft_putstr_fd(error_msg, 2);
-    clean_and_exit(mlx);
+	ft_putstr_fd(error_msg, 2);
+	clean_and_exit(mlx);
 }

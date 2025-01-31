@@ -14,22 +14,22 @@
 
 /*This function is used in case of array allocation
 if one's fail it will clean the previous allocations*/
-void    free_arr(char **arr, int index)
+void	free_arr(char **arr, int index)
 {
-    perror("Allocation fail for row ! : ");
-    while (index >= 0)
-        free(arr[index]);
-    free(arr);
+	perror("Allocation fail for row ! : ");
+	while (index >= 0)
+		free(arr[index]);
+	free(arr);
 }
 
-void 	ft_free(char **map)
+void	ft_free(char **map)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (map[i])
 	{
 		free(map[i++]);
 	}
-	free(map);	
+	free(map);
 }

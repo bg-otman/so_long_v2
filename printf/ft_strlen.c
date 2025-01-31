@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_static.c                                      :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 10:57:48 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/26 10:59:01 by obouizi          ###   ########.fr       */
+/*   Created: 2024/12/01 14:18:27 by obouizi           #+#    #+#             */
+/*   Updated: 2025/01/30 15:10:18 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "ft_printf.h"
 
-/*All this function doing is just freeing 
-the remaining data in the static variable*/
-void	free_static(int fd)
+size_t	ft_strlen(const char *s)
 {
-	char	*buffer;
+	size_t	i;
 
-	buffer = get_next_line(fd);
-	while (buffer)
+	i = 0;
+	if (!s)
 	{
-		free(buffer);
-		buffer = get_next_line(fd);
+		return (i);
 	}
+	while (s[i])
+	{
+		i++;
+	}
+	return (i);
 }

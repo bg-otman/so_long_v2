@@ -6,94 +6,120 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:42:59 by obouizi           #+#    #+#             */
-/*   Updated: 2025/01/29 21:20:33 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/01/30 16:20:40 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-
-void    game_over(t_data *mlx)
+void	check_entred_door(t_data *mlx, char **map)
 {
-    printf("Game over You won!\n");
-    close_window(mlx);
+	int (y), (x);
+	y = 1;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'E')
+				return ;
+			x++;
+		}
+		y++;
+	}
+	game_over(mlx);
 }
 
-void    check_entred_door(t_data *mlx, char **map)
+void	get_player_position(char **map, int *player_x, int *player_y)
 {
-    int (y), (x);
-    
-    y = 1;
-    while (map[y])
-    {
-        x = 0;
-        while (map[y][x])
-        {
-            if (map[y][x] == 'E')
-                return ;
-            x++;
-        }
-        y++;
-    }
-    game_over(mlx);
+	int (y), (x);
+	y = 1;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'P')
+			{
+				*player_x = x;
+				*player_y = y;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
 }
 
-void    is_valid_move(int key, t_player *player, char **map, t_data *mlx)
+static void	handle_horizontal_movement(int key, t_data *mlx, int player_x,
+		int player_y)
 {
-    int playerX;
-    int playerY;
+	char	**map;
 
-    get_player_position(map, &playerX, &playerY);
-    if (key == XK_Right)
-    {
-        if (map[playerY] && map[playerY][playerX + 1] != '1'
-             && (map[playerY][playerX + 1] != 'E' || mlx->collect_all))
-        {
-            player->x += player->speed;
-            map[playerY][playerX] = '0';
-            map[playerY][playerX + 1] = 'P';
-        }
-    }
-    if (key == XK_Left)
-    {
-        if (map[playerY] && map[playerY][playerX - 1] != '1'
-            && (map[playerY][playerX - 1] != 'E' || mlx->collect_all))
-        {
-            player->x -= player->speed;
-            map[playerY][playerX] = '0';
-            map[playerY][playerX - 1] = 'P';
-        }
-    }
-    if (key == XK_Up)
-    {
-        if (map[playerY - 1] && map[playerY - 1][playerX] != '1'
-            && (map[playerY - 1][playerX] != 'E' || mlx->collect_all))
-        {
-            player->y -= player->speed;
-            map[playerY][playerX] = '0';
-            map[playerY - 1][playerX] = 'P';
-        }
-    }
-    if (key == XK_Down)
-    {
-        if (map[playerY + 1] && map[playerY + 1][playerX] != '1'
-            && (map[playerY + 1][playerX] != 'E' || mlx->collect_all))
-        {
-            player->y += player->speed;
-            map[playerY][playerX] = '0';
-            map[playerY + 1][playerX] = 'P';
-        }
-    }
-    if (mlx->collect_all)
-    {
-        check_entred_door(mlx, map);
-    }
+	map = mlx->map->map_grid;
+	if (key == XK_Right || key == XK_d)
+	{
+		if (map[player_y] && map[player_y][player_x + 1] != '1'
+			&& (map[player_y][player_x + 1] != 'E' || mlx->collect_all))
+		{
+			mlx->player->x += mlx->player->speed;
+			map[player_y][player_x] = '0';
+			map[player_y][player_x + 1] = 'P';
+			ft_printf("player moves : %d\n", ++(mlx->player->moves_count));
+		}
+	}
+	if (key == XK_Left || key == XK_a)
+	{
+		if (map[player_y] && map[player_y][player_x - 1] != '1'
+			&& (map[player_y][player_x - 1] != 'E' || mlx->collect_all))
+		{
+			mlx->player->x -= mlx->player->speed;
+			map[player_y][player_x] = '0';
+			map[player_y][player_x - 1] = 'P';
+			ft_printf("player moves : %d\n", ++(mlx->player->moves_count));
+		}
+	}
 }
 
-
-
-void move_player(int key, t_data *mlx)
+static void	handle_vertical_movement(int key, t_data *mlx, int player_x,
+		int player_y)
 {
-    is_valid_move(key, mlx->player, mlx->map->map_grid, mlx);
-    draw_all(mlx);
+	char	**map;
+
+	map = mlx->map->map_grid;
+	if (key == XK_Up || key == XK_w)
+	{
+		if (map[player_y - 1] && map[player_y - 1][player_x] != '1' &&
+			(map[player_y - 1][player_x] != 'E' || mlx->collect_all))
+		{
+			mlx->player->y -= mlx->player->speed;
+			map[player_y][player_x] = '0';
+			map[player_y - 1][player_x] = 'P';
+			ft_printf("player moves : %d\n", ++(mlx->player->moves_count));
+		}
+	}
+	if (key == XK_Down || key == XK_s)
+	{
+		if (map[player_y + 1] && map[player_y + 1][player_x] != '1' &&
+			(map[player_y + 1][player_x] != 'E' || mlx->collect_all))
+		{
+			mlx->player->y += mlx->player->speed;
+			map[player_y][player_x] = '0';
+			map[player_y + 1][player_x] = 'P';
+			ft_printf("player moves : %d\n", ++(mlx->player->moves_count));
+		}
+	}
+}
+
+void	move_player(int key, t_data *mlx)
+{
+	int	player_x;
+	int	player_y;
+
+	get_player_position(mlx->map->map_grid, &player_x, &player_y);
+	handle_horizontal_movement(key, mlx, player_x, player_y);
+	handle_vertical_movement(key, mlx, player_x, player_y);
+	if (mlx->collect_all)
+		check_entred_door(mlx, mlx->map->map_grid);
+	draw_all(mlx);
 }
