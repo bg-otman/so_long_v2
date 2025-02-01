@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:42:59 by obouizi           #+#    #+#             */
-/*   Updated: 2025/02/01 18:02:03 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/02/01 18:46:11 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	get_player_position(char **map, int *player_x, int *player_y)
 
 static void	handle_horizontal_movement(int key, t_data *mlx, int x, int y)
 {
-	if (key == XK_Right || key == XK_d)
+	if (key == RIGHT || key == D_KEY)
 	{
 		if (mlx->map->map_grid[y] && mlx->map->map_grid[y][x + 1] != '1'
 			&& (mlx->map->map_grid[y][x + 1] != 'E' || mlx->collect_all))
@@ -65,7 +65,7 @@ static void	handle_horizontal_movement(int key, t_data *mlx, int x, int y)
 		}
 		mlx->player->look_right = 1;
 	}
-	if (key == XK_Left || key == XK_a)
+	if (key == LEFT || key == A_KEY)
 	{
 		if (mlx->map->map_grid[y] && mlx->map->map_grid[y][x - 1] != '1'
 			&& (mlx->map->map_grid[y][x - 1] != 'E' || mlx->collect_all))
@@ -85,7 +85,7 @@ static void	handle_vertical_movement(int key, t_data *mlx, int player_x,
 	char	**map;
 
 	map = mlx->map->map_grid;
-	if (key == XK_Up || key == XK_w)
+	if (key == UP || key == W_KEY)
 	{
 		if (map[player_y - 1] && map[player_y - 1][player_x] != '1' &&
 			(map[player_y - 1][player_x] != 'E' || mlx->collect_all))
@@ -96,7 +96,7 @@ static void	handle_vertical_movement(int key, t_data *mlx, int player_x,
 			mlx->player->moves_count++;
 		}
 	}
-	if (key == XK_Down || key == XK_s)
+	if (key == DOWN || key == S_KEY)
 	{
 		if (map[player_y + 1] && map[player_y + 1][player_x] != '1' &&
 			(map[player_y + 1][player_x] != 'E' || mlx->collect_all))

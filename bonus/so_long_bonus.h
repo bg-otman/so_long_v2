@@ -6,7 +6,7 @@
 /*   By: obouizi <obouizi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:26:59 by obouizi           #+#    #+#             */
-/*   Updated: 2025/02/01 16:17:10 by obouizi          ###   ########.fr       */
+/*   Updated: 2025/02/01 18:43:42 by obouizi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@
 
 # define NUM_SPRITE 17
 # define E_NUM_SPRITES 16
+# define ESCAPE 65307
+# define RIGHT 65363
+# define LEFT 65361
+# define DOWN 65364
+# define UP 65362
+# define A_KEY 97
+# define S_KEY 115
+# define D_KEY 100
+# define W_KEY 119
 
 typedef struct s_map
 {
